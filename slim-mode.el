@@ -65,8 +65,7 @@ if the next line could be nested within this line.")
              (regexp-opt '("if" "unless" "while" "until" "else"
                            "begin" "elsif" "rescue" "ensure" "when"))
              "\\)")
-    "^ *|"
-    "^ */"
+    "^ *[|/']"
     "^ *[a-z0-9_]:")
   "A list of regexps that match lines of Slim that could have
 text nested beneath them.")
