@@ -95,6 +95,15 @@ text nested beneath them.")
 
 (defvar html-tags-re (concat "^ *\\(" (regexp-opt html-tags 'words) "\/?\\)"))
 
+(defvar html-selfclosing-tags
+  '("meta" "title" "img" "area" "base"
+    "br" "col" "command" "embed" "hr"
+    "input" "link" "param" "source" "track" "wbr")
+  "A list of all HTML4/5 tags that are self-closing (and thus are not treated like block
+  openers).")
+
+(defvar html-selfclosing-tags-re (concat "^ *\\(" (regexp-opt html-selfclosing-tags 'words) "\/?\\)"))
+
 (defconst slim-font-lock-keywords
   `(;; comment block
     (,(slim-nested-re "/.*")
@@ -344,9 +353,11 @@ character of the next line."
 
 (defun slim-indent-p ()
   "Returns true if the current line can have lines nested beneath it."
-  (loop for opener in slim-block-openers
-        if (looking-at opener) return t
-        finally return nil))
+  (and (not (looking-at html-selfclosing-tags-re))
+       (not (looking-at "^.+/ *$"))
+       (loop for opener in slim-block-openers
+             if (looking-at opener) return t
+             finally return nil)))
 
 (defun slim-compute-indentation ()
   "Calculate the maximum sensible indentation for the current line."
