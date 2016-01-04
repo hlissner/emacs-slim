@@ -74,7 +74,7 @@ text nested beneath them.")
 
 ;; Helper for nested block (comment, embedded, text)
 (defun slim-nested-re (re)
-  (concat "^\\( *\\)" re "\n\\(?:\\(?:\\1 .*\\)\n\\)*"))
+  (concat "^\\( *\\)" re "\n\\(?:\\(?:\\1 .*\\)?\n\\)*"))
 
 (defvar html-tags
   '("a" "abbr" "acronym" "address" "applet" "area" "article" "aside"
